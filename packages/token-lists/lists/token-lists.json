@@ -1,0 +1,20 @@
+{
+  "https://tokens.dsentr.com/dsentr-default.json": {
+    "name": "DSentr Default",
+    "homepage": "https://dsentr.com"
+  },
+  "https://tokens.dsentr.com/dsentr-extended.json": {
+    "name": "DSentr Extended",
+    "homepage": "https://dsentr.com"
+
+  },
+  "https://tokens.dsentr.com/dsentr-top-100.json": {
+    "name": "DSentr Top 100",
+    "homepage": "https://dsentr.com"
+
+  },
+  "https://tokens.coingecko.com/binance-smart-chain/all.json": {
+    "name": "CoinGecko",
+    "homepage": "https://www.coingecko.com"
+  }
+}

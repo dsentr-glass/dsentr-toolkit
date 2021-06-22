@@ -1,0 +1,49 @@
+{
+  "name": "@dsentr-glass/token-lists",
+  "version": "2.14.4",
+  "main": "dist/index.js",
+  "type": "module",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "rm -rf ./dist && rollup -c",
+    "checksum:dsentr-default": "yarn build && node ./dist checksum dsentr-default",
+    "generate:dsentr-default": "yarn test && yarn build && node ./dist generate dsentr-default",
+    "makelist:dsentr-default": "yarn checksum:dsentr-default && yarn generate:dsentr-default",
+    "checksum:dsentr-extended": "yarn build && node ./dist checksum dsentr-extended",
+    "generate:dsentr-extended": "yarn test && yarn build && node ./dist generate dsentr-extended",
+    "makelist:dsentr-extended": "yarn checksum:dsentr-extended && yarn generate:dsentr-extended",
+    "checksum:dsentr-top-100": "yarn build && node ./dist checksum dsentr-top-100",
+    "generate:dsentr-top-100": "yarn test && yarn build && node ./dist generate dsentr-top-100",
+    "makelist:dsentr-top-100": "yarn checksum:dsentr-top-100 && yarn generate:dsentr-top-100",
+    "fetch:dsentr-top-100": "yarn build && node ./dist fetch",
+    "test": "jest -t",
+    "lint": "ts-standard | snazzy"
+  },
+  "dependencies": {
+    "@ethersproject/address": "^5.1.0",
+    "@uniswap/token-lists": "^1.0.0-beta.21",
+    "ajv": "6.12.2",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.14.1",
+    "@babel/preset-typescript": "^7.13.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
+    "@types/jest": "^26.0.23",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.0.2",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "rollup": "^2.47.0",
+    "ts-jest": "^26.5.6"
+  },
+  "ts-standard": {
+    "ignore": [
+      "dist"
+    ]
+  }
+}
