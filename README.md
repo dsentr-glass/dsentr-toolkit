@@ -1,3 +1,5 @@
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/dsentr-glass/dsentr-toolkit)
+
 # DSentr Toolkit
 
 This repository is a PancakeSwap forked monorepo managed with [yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) and [Lerna](https://lerna.js.org/).
