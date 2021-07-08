@@ -1,16 +1,16 @@
-import { Campaign, TranslatableText, Profile } from "../types";
+import { Campaign, TranslatableText, Profile } from '../types'
 
-export type ProfileResponse = {
-  0: string;
-  1: string;
-  2: string;
-  3: string;
-  4: string;
-  5: boolean;
-};
+export interface ProfileResponse {
+  0: string
+  1: string
+  2: string
+  3: string
+  4: string
+  5: boolean
+}
 
 export const transformProfileResponse = (profileResponse: ProfileResponse): Partial<Profile> => {
-  const { 0: userId, 1: numberPoints, 2: teamId, 3: nftAddress, 4: tokenId, 5: isActive } = profileResponse;
+  const { 0: userId, 1: numberPoints, 2: teamId, 3: nftAddress, 4: tokenId, 5: isActive } = profileResponse
 
   return {
     userId: Number(userId),
@@ -18,36 +18,36 @@ export const transformProfileResponse = (profileResponse: ProfileResponse): Part
     teamId: Number(teamId),
     tokenId: Number(tokenId),
     nftAddress,
-    isActive,
-  };
-};
+    isActive
+  }
+}
 
-export const getAchievementTitle = (campaign: Campaign): TranslatableText => {
+export const getAchievementTitle = (campaign: Campaign): TranslatableText | undefined => {
   switch (campaign.type) {
-    case "ifo":
+    case 'ifo':
       return {
         id: 999,
-        fallback: `IFO Shopper: ${campaign.title}`,
+        fallback: `IFO Shopper: ${campaign.title?.toString() ?? ''}`,
         data: {
-          name: campaign.title as string,
-        },
-      };
+          name: campaign.title as string
+        }
+      }
     default:
-      return campaign.title;
+      return campaign.title ?? ''
   }
-};
+}
 
-export const getAchievementDescription = (campaign: Campaign): TranslatableText => {
+export const getAchievementDescription = (campaign: Campaign): TranslatableText | undefined => {
   switch (campaign.type) {
-    case "ifo":
+    case 'ifo':
       return {
         id: 999,
-        fallback: `Committed more than $5 worth of LP in the ${campaign.title} IFO`,
+        fallback: `Committed more than $5 worth of LP in the ${campaign.title?.toString() ?? ''} IFO`,
         data: {
-          name: campaign.title as string,
-        },
-      };
+          name: campaign.title as string
+        }
+      }
     default:
-      return campaign.description;
+      return campaign.description ?? ''
   }
-};
+}

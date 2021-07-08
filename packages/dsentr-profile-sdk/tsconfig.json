@@ -5,8 +5,11 @@
     "lib": ["ES2020", "DOM"],
     "target": "ES5",
     "esModuleInterop": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "strict": true,
+    "types": ["jest"],
+    "typeRoots": ["../../node_modules/@types", "node_modules/@types"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "**/__mocks__/*", "src/mocks/**", "jest.setup.js"]
+  "include": ["src", "."],
+  "exclude": ["node_modules", "../../node_modules", "dist"]
 }

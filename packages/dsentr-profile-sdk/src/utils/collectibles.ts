@@ -1,9 +1,9 @@
-import Web3 from "web3";
-import Nfts, { nftSources } from "../constants/nfts";
-import { IPFS_GATEWAY } from "../constants/common";
-import { Nft, NftUriData } from "../types";
-import { getNftAddress } from "./addressHelpers";
-import { getErc721Contract } from "./contractHelpers";
+import Web3 from 'web3'
+import Nfts, { nftSources } from '../constants/nfts'
+import { IPFS_GATEWAY } from '../constants/common'
+import { Nft, NftUriData } from '../types'
+import { getNftAddress } from './addressHelpers'
+import { getErc721Contract } from './contractHelpers'
 
 /**
  * Gets the identifier key based on the nft address
@@ -11,66 +11,69 @@ import { getErc721Contract } from "./contractHelpers";
  */
 export const getIdentifierKeyFromAddress = (nftAddress: string, chainId: number): string | null => {
   const nftSource = Object.values(nftSources).find((nftSourceEntry) => {
-    const address = getNftAddress(nftSourceEntry.address, chainId);
-    return address === nftAddress;
-  });
+    const address = getNftAddress(nftSourceEntry.address, chainId)
+    return address === nftAddress
+  })
 
-  return nftSource ? nftSource.identifierKey : null;
-};
+  return (nftSource != null) ? nftSource.identifierKey : null
+}
 
 /**
  * Some sources like Pancake do not return HTTP tokenURI's. Same with DSentr/Glass???
  */
 export const getTokenUrl = (tokenUri: string): string => {
-  if (tokenUri.startsWith("ipfs://")) {
-    return `${IPFS_GATEWAY}/ipfs/${tokenUri.slice(7)}`;
+  if (tokenUri.startsWith('ipfs://')) {
+    return `${IPFS_GATEWAY}/ipfs/${tokenUri.slice(7)}`
   }
 
-  return tokenUri;
-};
+  return tokenUri
+}
 
 export const getTokenUriData = async (nftAddress: string, tokenId: number, web3: Web3): Promise<NftUriData | null> => {
   try {
-    const contract = getErc721Contract(nftAddress, web3);
-    const tokenUri = await contract.methods.tokenURI(tokenId).call();
-    const uriDataResponse = await fetch(getTokenUrl(tokenUri));
+    const contract = getErc721Contract(nftAddress, web3)
+    if (contract == null) {
+      throw new Error('contract is undefined')
+    }
+    const tokenUri = await contract.methods.tokenURI(tokenId).call()
+    const uriDataResponse = await fetch(getTokenUrl(tokenUri))
 
     if (!uriDataResponse.ok) {
-      return null;
+      return null
     }
 
-    const uriData: NftUriData = await uriDataResponse.json();
-    return uriData;
+    const uriData: NftUriData = await uriDataResponse.json()
+    return uriData
   } catch (error) {
-    console.error("getTokenUriData", error);
-    return null;
+    console.error('getTokenUriData', error)
+    return null
   }
-};
+}
 
 export const getNftByTokenId = async (
   nftAddress: string,
   tokenId: number,
   web3: Web3,
   chainId: number
-): Promise<Nft | null> => {
-  const uriData = await getTokenUriData(nftAddress, tokenId, web3);
-  const identifierKey = getIdentifierKeyFromAddress(nftAddress, chainId);
+): Promise<Nft | undefined | null> => {
+  const uriData: NftUriData | null = await getTokenUriData(nftAddress, tokenId, web3)
+  const identifierKey = getIdentifierKeyFromAddress(nftAddress, chainId)
 
   // Bail out early if we have no uriData, identifierKey, or the value does not
   // exist in the object
-  if (!uriData) {
-    return null;
+  if (uriData == null) {
+    return null
   }
 
-  if (!identifierKey) {
-    return null;
+  if (identifierKey == null) {
+    return null
   }
 
-  if (!uriData[identifierKey]) {
-    return null;
+  if (uriData[identifierKey] == null) {
+    return null
   }
 
   return Nfts.find((nft) => {
-    return uriData[identifierKey].includes(nft.identifier);
-  });
-};
+    return identifierKey === nft.identifier && uriData[identifierKey]
+  })
+}
