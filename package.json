@@ -2,6 +2,7 @@
   "name": "dsentr-toolkit",
   "version": "1.0.0",
   "description": "DSentr frontend packages",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
