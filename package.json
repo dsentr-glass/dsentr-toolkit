@@ -2,7 +2,6 @@
   "name": "dsentr-toolkit",
   "version": "1.0.0",
   "description": "DSentr frontend packages",
-  "private": true,
   "workspaces": [
     "packages/*"
   ],
@@ -10,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/dsentr-glass/dsentr-toolkit.git"
   },
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/dsentr-glass/dsentr-toolkit/issues"
   },
