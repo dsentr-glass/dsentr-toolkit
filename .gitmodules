@@ -1,0 +1,3 @@
+[submodule "packages/dsentr-uikit/dsentr-uikit"]
+	path = packages/dsentr-uikit/dsentr-uikit
+	url = https://github.com/dsentr-glass/dsentr-uikit.git
